@@ -1,8 +1,14 @@
-Este es un codigo
-    de prueba
+inicio
+[
+//este es otro comentario
+    si variable == 10:
     [
-        con simbolos #
-        tabs
-        y otros @
-        :-)
+        //este es un comentario
+        lee variable#
     ]
+    sino:
+    [
+        escribe variable#
+    ]
+]
+fin
