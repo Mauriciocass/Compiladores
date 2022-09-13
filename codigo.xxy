@@ -10,7 +10,6 @@ inicio
     sino:
     [
         escribe variable#
-        escribe A
         escribe "buenas tardes"#
         escribe "buenas noches"#
     ]

@@ -37,6 +37,9 @@ def main():
             tokens[temp] = f'{[x]}'
             x += 1
 
+    f = f.replace('#', ' #')
+    f = f.replace(':', ' :')
+
     # Pasa por el codigo linea por linea y tokeniza.
     for l in f.split('\n'):
         linea += 1
@@ -47,6 +50,8 @@ def main():
                 else:
                     if s in tokens:
                         s = tokens.get(s)
+                    elif s in tokens.values():
+                        pass
                     else:
                         # Checa cada letra de los tokens que todavia no se han
                         # tokenizado, si alguno tiene mayuscula, marca error.
