@@ -1,83 +1,81 @@
+from curses.ascii import isupper
+from dataclasses import replace
+from distutils.log import error
 import re
+import pandas as pd
+
+reservadas = {"=": "[00]", "+": "[01]", "-": "[02]", "*": "[03]", "/": "[04]",
+    "(": "[05]", ")": "[06]", "==": "[07]", "<>": "[08]", ">": "[09]",
+    ">=": "[10]", "<": "[11]", "<=": "[12]", "[": "[13]", "]": "[14]",
+    "#": "[15]", ":": "[16]", "si": "[20]", "sino": "[21]", "desde": "[22]",
+    "realiza": "[23]", "mientras": "[24]", "lee": "[25]", "escribe": "[26]",
+    "hasta": "[27]", "//": "[28]", "inicio": "[30]", "fin": "[31]"
+}
+
+tokens = {}
 
 def main():
-    # Contador de variables y constantes tokenizadas.
+    # Crea un nuevo archivo de nombre 'codigo.xxz' y escribe lo mismo estaba en
+    # el archivo 'codigo.xxy'.
+    f = open('codigo.xxy', 'r').read()
+
+    # Numero en el que empiezan las referencias de la tabla de referencias.
     x = 100
 
-    # Abre el archivo de nombre 'codigo.xxy'.
-    f = open('codigo.xxy', 'r')
-    code = f.read()
-    print(code)
+    error = False
 
-    # Tokeniza las palabras 'sino' y 'si'. En este orden estrictamente, pues
-    # 'sino' contiene 'si'.
-    code = code.replace('sino', '{21}')
-    code = code.replace('si', '{20}')
+    linea = 0
 
-    # Tokeniza las palabras 'lee' y 'escribe'.
-    code = code.replace('lee', '{25}')
-    code = code.replace('escribe', '{26}')
+    # Variable de codigo temporal, si el proceso es exitoso se guardara en el
+    # archivo con extension ".xxz".
+    temp_code = ""
 
-    # Tokeniza las palabras 'desde', 'realiza', 'mientras' y 'hasta'.
-    code = code.replace('desde', '{22}')
-    code = code.replace('realiza', '{23}')
-    code = code.replace('meintras', '{24}')
-    code = code.replace('hasta', '{27}')
-
-    # Tokeniza las palabras 'inicio' y 'final'.
-    code = code.replace('inicio', '{30}')
-    code = code.replace('fin', '{31}')
-
-    # Tokeniza los operandos '==', '<>', '>=', '<=', '>', '<' en ese orden.
-    code = code.replace('==', '{07}')
-    code = code.replace('<>', '{08}')
-    code = code.replace('>=', '{10}')
-    code = code.replace('<=', '{12}')
-    code = code.replace('>', '{09}')
-    code = code.replace('<', '{11}')
-
-    # Tokeniza simbolos '[', ']', '+', '-', '*', '/', '=', '(', ')', ':', '#'.
-    code = code.replace('[', '{13}')
-    code = code.replace(']', '{14}')
-    code = code.replace('+', '{01}')
-    code = code.replace('-', '{02}')
-    code = code.replace('*', '{03}')
-    code = code.replace('/', '{04}')
-    code = code.replace('=', '{00}')
-    code = code.replace('(', '{05}')
-    code = code.replace(')', '{06}')
-    code = code.replace(':', '{16}')
-    code = code.replace('#', '{15}')
-
-    # Busca lo que esta entre comillas y lo tokeniza.
-    while re.search('"(.*)"', code) is not None:
-        code = code.replace(re.search('"(.*)"', code).group(0), f'[{x}]')
-        x += 1
-
-    # Elimina todo el espacio en blanco.
-    code = code.replace(' ', '')
-
-
-    while re.search('}(.*){', code) is not None:
-        if re.search('}(.*){', code) is '}{':
-            code = code.replace(re.search('}(.*){', code).group(0), '][')
-        else:
-            code = code.replace(re.search('}(.*){', code).group(0), f'[{x}]')
+    # Busca los strings constantes en el codigo y los tokeniza individualmente.
+    while re.search('"(.*)"', f) is not None:
+            temp = re.search('"(.*)"', f).group(0)
+            f = f.replace(temp, f'[{x}]')
+            tokens[temp] = f'{[x]}'
             x += 1
 
-    # Cambia los simbolos de '{' y '}' a '[' y ']' respectivamente.
-    code = code.replace('{', '[')
-    code = code.replace('}', ']')
+    # Pasa por el codigo linea por linea y tokeniza.
+    for l in f.split('\n'):
+        linea += 1
+        if '//' not in l:
+            for s in l.split():
+                if s in reservadas.keys():
+                    s = reservadas.get(s)
+                else:
+                    if s in tokens:
+                        s = tokens.get(s)
+                    else:
+                        # Checa cada letra de los tokens que todavia no se han
+                        # tokenizado, si alguno tiene mayuscula, marca error.
+                        for n in s:
+                            if n.isupper():
+                                error = True
+                                print(f'Error en linea {linea}')
+                                break
+                        tokens[s] = f'{[x]}'
+                        s = tokens.get(s)
+                    x += 1
+                temp_code += s
+            temp_code += '\n'
 
-    # Divide el codigo en lineas, para tokenizar linea por linea.
-    code = code.split('\n')
+    # Hace un DataFrame de los tokens de variables y constantes, con sus
+    # valores.
+    df = pd.DataFrame(
+        {
+            "Token": tokens.keys(),
+            "Value": tokens.values()
+        }
+    )
 
-    g = open('codigo.xxz', 'w')
+    df.to_csv('referencias.csv')
 
-    # Cada linea se agrega al nuevo archivo individualmente.
-    for l in code:
-        if '[04][04]' not in l:
-            g.write(l + '\n')
+    # Si no hubo error, se crea un archivo con extension ".xxz".
+    if not error:
+        g = open('codigo.xxz', 'w')
+        g.write(temp_code)
 
 if __name__=="__main__":
     main()
