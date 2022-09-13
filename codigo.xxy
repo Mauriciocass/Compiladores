@@ -1,7 +1,7 @@
 inicio
 [
 //este es otro comentario
-    si variable == 10:
+    si variable == 10 :
     [
         //este es un comentario
         lee variable#

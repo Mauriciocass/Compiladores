@@ -21,9 +21,10 @@ def main():
 
     # Numero en el que empiezan las referencias de la tabla de referencias.
     x = 100
-
+    # Bandera que nos sirve para saber si existe algun error, por default es
+    # false.
     error = False
-
+    # Contador de la linea en la que el analizador esta en el momento.
     linea = 0
 
     # Variable de codigo temporal, si el proceso es exitoso se guardara en el
@@ -39,6 +40,11 @@ def main():
 
     f = f.replace('#', ' #')
     f = f.replace(':', ' :')
+    f = f.replace('(', ' (')
+    f = f.replace(')', ' )')
+    f = f.replace('+', ' + ')
+    f = f.replace('-', ' - ')
+    f = f.replace('*', ' * ')
 
     # Pasa por el codigo linea por linea y tokeniza.
     for l in f.split('\n'):
