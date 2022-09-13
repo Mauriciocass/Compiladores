@@ -1,12 +1,13 @@
 import re
 
 def main():
+    # Contador de variables y constantes tokenizadas.
+    x = 100
+
     # Abre el archivo de nombre 'codigo.xxy'.
     f = open('codigo.xxy', 'r')
     code = f.read()
     print(code)
-
-    x = 100
 
     # Tokeniza las palabras 'sino' y 'si'. En este orden estrictamente, pues
     # 'sino' contiene 'si'.
@@ -48,21 +49,29 @@ def main():
     code = code.replace(':', '{16}')
     code = code.replace('#', '{15}')
 
-    # Cambia los simbolos de '{' y '}' a '[' y ']' respectivamente.
-    code = code.replace('{', '[')
-    code = code.replace('}', ']')
-
+    # Busca lo que esta entre comillas y lo tokeniza.
     while re.search('"(.*)"', code) is not None:
         code = code.replace(re.search('"(.*)"', code).group(0), f'[{x}]')
         x += 1
 
+    # Elimina todo el espacio en blanco.
     code = code.replace(' ', '')
+
+
+    while re.search('}(.*){', code) is not None:
+        if re.search('}(.*){', code) is '}{':
+            code = code.replace(re.search('}(.*){', code).group(0), '][')
+        else:
+            code = code.replace(re.search('}(.*){', code).group(0), f'[{x}]')
+            x += 1
+
+    # Cambia los simbolos de '{' y '}' a '[' y ']' respectivamente.
+    code = code.replace('{', '[')
+    code = code.replace('}', ']')
 
     # Divide el codigo en lineas, para tokenizar linea por linea.
     code = code.split('\n')
 
-    # Crea un nuevo archivo de nombre 'codigo.xxz' y escribe lo mismo estaba en
-    # el archivo 'codigo.xxy'.
     g = open('codigo.xxz', 'w')
 
     # Cada linea se agrega al nuevo archivo individualmente.
