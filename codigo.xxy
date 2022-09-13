@@ -5,10 +5,13 @@ inicio
     [
         //este es un comentario
         lee variable#
+        escribe "buenas tardes"#
     ]
     sino:
     [
         escribe variable#
+        escribe "buenas tardes"#
+        escribe "buenas noches"#
     ]
 ]
 fin

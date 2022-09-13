@@ -1,10 +1,12 @@
-from dataclasses import replace
+import re
 
 def main():
     # Abre el archivo de nombre 'codigo.xxy'.
     f = open('codigo.xxy', 'r')
     code = f.read()
     print(code)
+
+    x = 100
 
     # Tokeniza las palabras 'sino' y 'si'. En este orden estrictamente, pues
     # 'sino' contiene 'si'.
@@ -49,6 +51,12 @@ def main():
     # Cambia los simbolos de '{' y '}' a '[' y ']' respectivamente.
     code = code.replace('{', '[')
     code = code.replace('}', ']')
+
+    while re.search('"(.*)"', code) is not None:
+        code = code.replace(re.search('"(.*)"', code).group(0), f'[{x}]')
+        x += 1
+
+    code = code.replace(' ', '')
 
     # Divide el codigo en lineas, para tokenizar linea por linea.
     code = code.split('\n')
