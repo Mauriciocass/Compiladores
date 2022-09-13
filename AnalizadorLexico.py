@@ -1,11 +1,16 @@
 from dataclasses import replace
-
+import re
+#Catga el documento
+f = open('codigo.xxy', 'r')
+code = f.read()
+#Se eliminan los comentarios despues de //
+def stripComments(code):
+    return re.sub(r'(?m)^ *//.*\n?', '', code)
 
 def main():
     # Abre el archivo de nombre 'codigo.xxy'.
     f = open('codigo.xxy', 'r')
     code = f.read()
-    print(code)
 
     # Tokeniza las palabras 'sino' y 'si'. En este orden estrictamente, pues
     # 'sino' contiene 'si'.
@@ -64,3 +69,4 @@ def main():
 
 if __name__=="__main__":
     main()
+print(stripComments(code))
