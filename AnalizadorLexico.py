@@ -1,6 +1,5 @@
 from dataclasses import replace
 
-
 def main():
     # Abre el archivo de nombre 'codigo.xxy'.
     f = open('codigo.xxy', 'r')
@@ -60,7 +59,8 @@ def main():
 
     # Cada linea se agrega al nuevo archivo individualmente.
     for l in code:
-        g.write(l + '\n')
+        if '[04][04]' not in l:
+            g.write(l + '\n')
 
 if __name__=="__main__":
     main()
