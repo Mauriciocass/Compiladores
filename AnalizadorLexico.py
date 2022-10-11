@@ -1,10 +1,8 @@
-from curses.ascii import isupper
-from dataclasses import replace
-from distutils.log import error
 import re
 import pandas as pd
 
-reservadas = {"=": "[00]", "+": "[01]", "-": "[02]", "*": "[03]", "/": "[04]",
+reservadas = {
+    "=": "[00]", "+": "[01]", "-": "[02]", "*": "[03]", "/": "[04]",
     "(": "[05]", ")": "[06]", "==": "[07]", "<>": "[08]", ">": "[09]",
     ">=": "[10]", "<": "[11]", "<=": "[12]", "[": "[13]", "]": "[14]",
     "#": "[15]", ":": "[16]", "si": "[20]", "sino": "[21]", "desde": "[22]",

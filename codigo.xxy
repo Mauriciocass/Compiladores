@@ -1,17 +1,5 @@
 inicio
 [
-//este es otro comentario
-    si variable == 10 :
-    [
-        //este es un comentario
-        lee variable#
-        escribe "buenas tardes"#
-    ]
-    sino:
-    [
-        escribe variable#
-        escribe "buenas tardes"#
-        escribe "buenas noches"#
-    ]
+    lee variable#
 ]
 fin

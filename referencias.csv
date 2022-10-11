@@ -1,5 +1,2 @@
 ,Token,Value
-0,"""buenas tardes""",[100]
-1,"""buenas noches""",[101]
-2,variable,[102]
-3,10,[103]
+0,variable,[100]
