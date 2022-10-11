@@ -13,5 +13,9 @@ inicio
         escribe "buenas tardes"#
         escribe "buenas noches"#
     ]
+    desde id=inicio hasta id=final realiza
+    [
+        escribe "algo"#
+    ]
 ]
 fin

@@ -1,5 +1,7 @@
 inicio
 [
-    lee variable#
+    desde id = 0 hasta id = 10 realiza
+    [
+        escribe "algo"#
+    ]
 ]
-fin

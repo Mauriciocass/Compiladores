@@ -1,4 +1,5 @@
 from os import popen
+from numpy import var
 import pandas as pd
 
 instrucciones = [
@@ -19,11 +20,19 @@ def check_20(code):
 # Revisa los DESDE y REALIZA
 def check_22(code):
     print('22')
-    pass
+    if f'{code[0]}' == '[14]':
+        code.pop(0)
+    elif f'{code[0]}{code[2]}{code[4]}{code[6]}{code[8]}{code[9]}' == '[22][00][27][00][23][13]' and code[1] in variables:
+        for x in list(range(0,10)):
+            code.pop(0)
+        check_code(code)
+    else:
+        print(f'ERROR en {code[0]}{code[1]}')
+        code.pop(0)
+        code.pop(0)
 
 # Revisa los MIENTRAS y REALIZA
 def check_24(code):
-    print('24')
     pass
 
 # Revisa los LEE
@@ -65,11 +74,11 @@ def check_30(code):
 
 
 def check_code(code):
-    while len(code) > 1:
+    while len(code) > 0:
         print(code)
         if code[0] == '[20]':
             check_20(code)
-        elif code[0] == '[22]':
+        elif code[0] == '[22]' or (code[0] == '[14]' and len(code) > 2):
             check_22(code)
         elif code[0] == '[24]':
             check_24(code)
