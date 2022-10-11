@@ -20,16 +20,24 @@ def check_20(code):
 # Revisa los DESDE y REALIZA
 def check_22(code):
     print('revisa DESDE y REALIZA')
-    if f'{code[0]}' == '[14]':
-        code.pop(0)
-    elif f'{code[0]}{code[2]}{code[4]}{code[6]}{code[8]}{code[9]}' == '[22][00][27][00][23][13]' and code[1] in variables:
-        for x in list(range(0,10)):
+    input()
+    if len(code) >= 10:
+        if f'{code[0]}{code[2]}{code[4]}{code[6]}{code[8]}{code[9]}' == '[22][00][27][00][23][13]' and code[1] in variables:
+            for x in list(range(0,10)):
+                code.pop(0)
+            check_code(code)
+        else:
+            print(f'ERROR en {code[0]}{code[1]}')
             code.pop(0)
-        check_code(code)
+            code.pop(0)
+            # Vaciar pila si hay error.
+
+    if f'{code[0]}' == '[14][23]':
+        code.pop(0)
+        code.pop(0)
     else:
         print(f'ERROR en {code[0]}{code[1]}')
-        code.pop(0)
-        code.pop(0)
+        code = []
 
 # Revisa los MIENTRAS y REALIZA
 def check_24(code):
@@ -56,6 +64,7 @@ def check_26(code):
     else:
         print('ERROR! in line:\n' +
         f'{code[0]}{code[1]}{code[2]}')
+        # Vaciar pila si hay error.
 
 # Revisa el INICIO y FIN
 def check_30(code):
