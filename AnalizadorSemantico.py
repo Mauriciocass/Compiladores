@@ -1,5 +1,3 @@
-from os import popen
-from numpy import var
 import pandas as pd
 
 instrucciones = [
@@ -20,7 +18,6 @@ def check_20(code):
 # Revisa los DESDE y REALIZA
 def check_22(code):
     print('revisa DESDE y REALIZA')
-    input()
 
     if f'{code[0]}{code[2]}{code[4]}{code[6]}{code[8]}{code[9]}' == '[22][00][27][00][23][13]' and code[1] in variables:
         for x in list(range(0,10)):
@@ -46,7 +43,6 @@ def check_24(code):
 # Revisa los LEE
 def check_25(code):
     print('revisa LEE')
-    input()
     if f'{code[0]}{code[2]}' == '[25][15]' and code[1] in variables:
         code.pop(0)
         code.pop(0)
@@ -60,7 +56,6 @@ def check_25(code):
 # Revisa los ESCRIBE
 def check_26(code):
     print('revisa ESCRIBE')
-    input()
     if f'{code[0]}{code[2]}' == '[26][15]' and code[1] in variables:
         code.pop(0)
         code.pop(0)
@@ -75,7 +70,6 @@ def check_26(code):
 # Revisa el INICIO y FIN
 def check_30(code):
     print('revisa INICIO y FIN')
-    input()
     if f'{code[0]}{code[1]}' == '[30][13]':
         code.pop(0)
         code.pop(0)
@@ -90,7 +84,6 @@ def check_30(code):
 
 def check_code(code):
     print(code)
-    input()
     if code[0] == '[20]':
         check_20(code)
     elif code[0] == '[22]':
@@ -114,7 +107,7 @@ def check_code(code):
 def main():
     code = open('codigo.xxz', 'r').read().replace('][', ']\n[').split('\n')
 
-    while len(code) != 0:
+    while len(code) > 1:
         code = check_code(code)
 
     print(code)
