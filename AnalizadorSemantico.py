@@ -19,7 +19,7 @@ def check_20(code):
 
 # Revisa los DESDE y REALIZA
 def check_22(code):
-    print('22')
+    print('revisa DESDE y REALIZA')
     if f'{code[0]}' == '[14]':
         code.pop(0)
     elif f'{code[0]}{code[2]}{code[4]}{code[6]}{code[8]}{code[9]}' == '[22][00][27][00][23][13]' and code[1] in variables:
@@ -37,7 +37,7 @@ def check_24(code):
 
 # Revisa los LEE
 def check_25(code):
-    print('25')
+    print('revisa LEE')
     if f'{code[0]}{code[2]}' == '[25][15]' and code[1] in variables:
         code.pop(0)
         code.pop(0)
@@ -48,7 +48,7 @@ def check_25(code):
 
 # Revisa los ESCRIBE
 def check_26(code):
-    print('26')
+    print('revisa ESCRIBE')
     if f'{code[0]}{code[2]}' == '[26][15]' and code[1] in variables:
         code.pop(0)
         code.pop(0)
@@ -59,7 +59,7 @@ def check_26(code):
 
 # Revisa el INICIO y FIN
 def check_30(code):
-    print('30')
+    print('revisa INICIO y FIN')
     if f'{code[0]}{code[1]}' == '[30][13]':
         code.pop(0)
         code.pop(0)

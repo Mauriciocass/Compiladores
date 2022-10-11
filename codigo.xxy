@@ -4,4 +4,9 @@ inicio
     [
         escribe "algo"#
     ]
+    desde id = 0 hasta id = 10 realiza
+    [
+        escribe "otra cosa"#
+    ]
 ]
+fin
