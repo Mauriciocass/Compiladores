@@ -88,7 +88,6 @@ def check_30(code):
         print(f'ERROR en {code[0]}{code[1]}')
         code = []
 
-
 def check_code(code):
     print(code)
     input()
