@@ -1,14 +1,12 @@
 inicio
 [
-//este es otro comentario
-    si variable == 10:
+    desde id = 0 hasta id = 10 realiza
     [
-        //este es un comentario
-        lee variable#
+        escribe "algo"#
     ]
-    sino:
+    desde id = 0 hasta id = 10 realiza
     [
-        escribe variable#
+        escribe "otra cosa"#
     ]
 ]
 fin
