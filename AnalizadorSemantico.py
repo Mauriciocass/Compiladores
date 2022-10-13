@@ -120,24 +120,28 @@ def check_30(code):
 
 def check_code(code):
     print(code)
-    if code[0] == '[20]':
-        check_20(code)
-    elif code[0] == '[22]':
-        check_22(code)
-    elif code[0] == '[24]':
-        check_24(code)
-    elif code[0] == '[25]':
-        check_25(code)
-    elif code[0] == '[26]':
-        check_26(code)
-    elif len(code) == 1 or code[0] == '':
-        print('El codigo se termino de analizar')
-    elif code[0] == '[30]' or code[1] == '[31]':
-        check_30(code)
-    else:
-        print(f'CHECK CODE')
-        print(f'ERROR en {code[0]}')
-        code = []
+    while True:
+        if code[0] == '[20]':
+            check_20(code)
+        elif code[0] == '[22]':
+            check_22(code)
+        elif code[0] == '[24]':
+            check_24(code)
+        elif code[0] == '[25]':
+            check_25(code)
+        elif code[0] == '[26]':
+            check_26(code)
+        elif len(code) == 1 or code[0] == '':
+            print('El codigo se termino de analizar')
+        elif code[0] == '[30]' or code[1] == '[31]':
+            check_30(code)
+        else:
+            print(f'CHECK CODE')
+            print(f'ERROR en {code[0]}')
+            code = []
+
+        if code[0] not in ['[25]', '[26]']:
+            break
     return code
 
 def main():
