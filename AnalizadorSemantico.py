@@ -12,6 +12,10 @@ operadores = [
     "[06]", "[07]", "[08]", "[09]", "[10]", "[11]", "[12]"
 ]
 
+aritmeticos = {
+    "[00]", "[01]", "[02]", "[03]", "[04]"
+}
+
 variables = pd.read_csv('referencias.csv')['Value'].to_list()
 
 # Revisa los SI y SINO
@@ -75,7 +79,7 @@ def check_22(code):
 # Revisa los MIENTRAS y REALIZA
 def check_24(code):
     print('revisa MIENTRAS y REALIZA')
-    
+
     if f'{code[0]}{code[1]}{code[5]}{code[6]}{code[7]}' == '[24][05][06][23][13]' and code[2] in variables and code[3] in operadores and code[4] in variables:
             for x in list(range(0,8)):
                 code.pop(0)
@@ -134,6 +138,21 @@ def check_30(code):
         print(f'ERROR en {code[0]}{code[1]}')
         code = []
 
+def check_asignacion(code):
+    print('revisa asignacion')
+
+    espera_var = True
+
+    while f'{code[0]}' != "[15]":
+        if espera_var and f'{code[0]}' in variables:
+            code.pop(0)
+            espera_var = False
+        elif not espera_var and f'{code[0]}' in aritmeticos:
+            code.pop(0)
+            espera_var = True
+
+    code.pop(0)
+
 def check_code(code):
     print(code)
     while True:
@@ -149,8 +168,11 @@ def check_code(code):
             check_26(code)
         elif len(code) == 1 or code[0] == '':
             print('El codigo se termino de analizar')
+            break
         elif code[0] == '[30]' or code[1] == '[31]':
             check_30(code)
+        elif code[0] in variables:
+            check_asignacion(code)
         else:
             print(f'CHECK CODE')
             print(f'ERROR en {code[0]}')
@@ -167,7 +189,6 @@ def main():
         code = check_code(code)
 
     print(code)
-    print('ANALIZADO')
 
 if __name__=="__main__":
     main()
