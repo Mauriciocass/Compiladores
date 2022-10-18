@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-from dataclasses import replace
-import re
-#Catga el documento
-f = open('codigo.xxy', 'r')
-code = f.read()
-#Se eliminan los comentarios despues de //
-def stripComments(code):
-    return re.sub(r'(?m)^ *//.*\n?', '', code)
-
-def main():
-    # Abre el archivo de nombre 'codigo.xxy'.
-    f = open('codigo.xxy', 'r')
-    code = f.read()
-
-    # Tokeniza las palabras 'sino' y 'si'. En este orden estrictamente, pues
-    # 'sino' contiene 'si'.
-    code = code.replace('sino', '{21}')
-    code = code.replace('si', '{20}')
-=======
 import re
 import pandas as pd
 
@@ -31,7 +11,6 @@ reservadas = {
 }
 
 tokens = {}
->>>>>>> 6abf7b23913436fa359740524d5e9ea7e484a2fc
 
 def main():
     # Crea un nuevo archivo de nombre 'codigo.xxz' y escribe lo mismo estaba en
@@ -109,4 +88,3 @@ def main():
 
 if __name__=="__main__":
     main()
-print(stripComments(code))
