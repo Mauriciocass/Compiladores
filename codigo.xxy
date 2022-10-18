@@ -1,12 +1,13 @@
 inicio
 [
-    desde id = 0 hasta id = 10 realiza
+    si ( x >= 10 ) :
     [
-        escribe "algo"#
+        lee "hola" #
+        lee "a" #
     ]
-    desde id = 0 hasta id = 10 realiza
+    sino :
     [
-        escribe "otra cosa"#
+        escribe mensaje #
     ]
 ]
 fin

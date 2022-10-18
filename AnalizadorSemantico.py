@@ -8,12 +8,48 @@ instrucciones = [
     "[27]", "[28]", "[30]", "[31]"
 ]
 
+operadores = [
+    "[06]", "[07]", "[08]", "[09]", "[10]", "[11]", "[12]"
+]
+
 variables = pd.read_csv('referencias.csv')['Value'].to_list()
 
 # Revisa los SI y SINO
 def check_20(code):
-    print('20')
-    pass
+    print('revisa SI')
+
+    # Revisa que el SI este correctamente estructurado.
+    if f'{code[0]}{code[1]}{code[5]}{code[6]}{code[7]}' == '[20][05][06][16][13]' and code[2] in variables and code[4] in variables and code[3] in operadores:
+        for x in list(range(0,8)):
+            code.pop(0)
+        check_code(code)
+    else:
+        print(f'ERROR en {code[0]}{code[1]}')
+        code = []
+        # Vaciar pila si hay error.
+
+    if f'{code[0]}' == '[14]':
+        code.pop(0)
+    else:
+        print(f'ERROR en {code[0]}')
+        code = []
+
+    print('revisa SINO')
+    if f'{code[0]}' == '[21]':
+        if f'{code[0]}{code[1]}{code[2]}' == '[21][16][13]':
+            for x in list(range(0,3)):
+                code.pop(0)
+            check_code(code)
+        else:
+            print(f'ERROR en {code[0]}')
+            code = []
+
+        if f'{code[0]}' == '[14]':
+            code.pop(0)
+            check_code(code)
+        else:
+            print(f'ERROR en {code[0]}')
+            code = []
 
 # Revisa los DESDE y REALIZA
 def check_22(code):
@@ -84,24 +120,28 @@ def check_30(code):
 
 def check_code(code):
     print(code)
-    if code[0] == '[20]':
-        check_20(code)
-    elif code[0] == '[22]':
-        check_22(code)
-    elif code[0] == '[24]':
-        check_24(code)
-    elif code[0] == '[25]':
-        check_25(code)
-    elif code[0] == '[26]':
-        check_26(code)
-    elif len(code) == 1 or code[0] == '':
-        print('El codigo se termino de analizar')
-    elif code[0] == '[30]' or code[1] == '[31]':
-        check_30(code)
-    else:
-        print(f'CHECK CODE')
-        print(f'ERROR en {code[0]}')
-        code = []
+    while True:
+        if code[0] == '[20]':
+            check_20(code)
+        elif code[0] == '[22]':
+            check_22(code)
+        elif code[0] == '[24]':
+            check_24(code)
+        elif code[0] == '[25]':
+            check_25(code)
+        elif code[0] == '[26]':
+            check_26(code)
+        elif len(code) == 1 or code[0] == '':
+            print('El codigo se termino de analizar')
+        elif code[0] == '[30]' or code[1] == '[31]':
+            check_30(code)
+        else:
+            print(f'CHECK CODE')
+            print(f'ERROR en {code[0]}')
+            code = []
+
+        if code[0] not in ['[25]', '[26]']:
+            break
     return code
 
 def main():
