@@ -48,7 +48,7 @@ def main():
     # Pasa por el codigo linea por linea y tokeniza.
     for l in f.split('\n'):
         linea += 1
-        if '//' not in l:
+        if '//' not in l and l != '':
             for s in l.split():
                 if s in reservadas.keys():
                     s = reservadas.get(s)
