@@ -17,5 +17,6 @@ inicio
     [
         escribe "algo"#
     ]
+    
 ]
 fin

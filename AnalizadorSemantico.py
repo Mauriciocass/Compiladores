@@ -74,8 +74,24 @@ def check_22(code):
 
 # Revisa los MIENTRAS y REALIZA
 def check_24(code):
-    pass
+    print('revisa MIENTRAS y REALIZA')
+    
+    if f'{code[0]}{code[1]}{code[5]}{code[6]}{code[7]}' == '[24][05][06][23][13]' and code[2] in variables and code[3] in operadores and code[4] in variables:
+            for x in list(range(0,8)):
+                code.pop(0)
+            check_code(code)
+    else:
+            print(f'MIENTRAS y REALIZA')
+            print(f'ERROR en {code[0]}{code[1]}')
+            code = []
+            # Vaciar pila si hay error.
 
+    if f'{code[0]}' == '[14]':
+            code.pop(0)
+    else:
+            print(f'MIENTRAS y REALIZA 2')
+            print(f'ERROR en {code[0]}')
+            code = []
 # Revisa los LEE
 def check_25(code):
     print('revisa LEE')
