@@ -20,40 +20,41 @@ variables = pd.read_csv('referencias.csv')['Value'].to_list()
 
 # Revisa los SI y SINO
 def check_20(code):
-    print('revisa SI')
-
     # Revisa que el SI este correctamente estructurado.
     if f'{code[0]}{code[1]}{code[5]}{code[6]}{code[7]}' == '[20][05][06][16][13]' and code[2] in variables and code[4] in variables and code[3] in operadores:
         for x in list(range(0,8)):
             code.pop(0)
         check_code(code)
     else:
-        print(f'ERROR en {code[0]}{code[1]}')
-        code = []
+        print(f'ERROR: condicion si incorrecta')
+        for x in range(len(code)-1):
+            code.pop(0)
         # Vaciar pila si hay error.
 
     if f'{code[0]}' == '[14]':
         code.pop(0)
     else:
         print(f'ERROR en {code[0]}')
-        code = []
+        for x in range(len(code)-1):
+            code.pop(0)
 
-    print('revisa SINO')
     if f'{code[0]}' == '[21]':
         if f'{code[0]}{code[1]}{code[2]}' == '[21][16][13]':
             for x in list(range(0,3)):
                 code.pop(0)
             check_code(code)
         else:
-            print(f'ERROR en {code[0]}')
-            code = []
+            print(f'ERROR: condicion sino incorrecta')
+            for x in range(len(code)-1):
+                code.pop(0)
 
         if f'{code[0]}' == '[14]':
             code.pop(0)
             check_code(code)
         else:
-            print(f'ERROR en {code[0]}')
-            code = []
+            print(f'ERROR: condicion sino incorrecta')
+            for x in range(len(code)-1):
+                code.pop(0)
 
 # Revisa los DESDE y REALIZA
 def check_22(code):
@@ -66,7 +67,8 @@ def check_22(code):
     else:
         print(f'DESDE y REALIZA')
         print(f'ERROR en {code[0]}{code[1]}')
-        code = []
+        for x in range(len(code)-1):
+            code.pop(0)
         # Vaciar pila si hay error.
 
     if f'{code[0]}' == '[14]':
@@ -74,28 +76,28 @@ def check_22(code):
     else:
         print(f'DESDE y REALIZA 2')
         print(f'ERROR en {code[0]}')
-        code = []
+        for x in range(len(code)-1):
+            code.pop(0)
 
 # Revisa los MIENTRAS y REALIZA
 def check_24(code):
-    print('revisa MIENTRAS y REALIZA')
-
-    if f'{code[0]}{code[1]}{code[5]}{code[6]}{code[7]}' == '[24][05][06][23][13]' and code[2] in variables and code[3] in operadores and code[4] in variables:
-            for x in list(range(0,8)):
-                code.pop(0)
-            check_code(code)
+    if f'{code[0]}{code[4]}{code[5]}' == '[24][23][13]' and code[1] in variables and code[2] in operadores and code[3] in variables:
+        for x in list(range(0,6)):
+            code.pop(0)
+        check_code(code)
     else:
-            print(f'MIENTRAS y REALIZA')
-            print(f'ERROR en {code[0]}{code[1]}')
-            code = []
-            # Vaciar pila si hay error.
+        print(f'ERROR: mientras')
+        for x in range(len(code)-1):
+            code.pop(0)
+        # Vaciar pila si hay error.
 
     if f'{code[0]}' == '[14]':
-            code.pop(0)
+        code.pop(0)
     else:
-            print(f'MIENTRAS y REALIZA 2')
-            print(f'ERROR en {code[0]}')
-            code = []
+        print(f'ERROR: parentesis final de mientras')
+        for x in range(len(code)-1):
+            code.pop(0)
+
 # Revisa los LEE
 def check_25(code):
     print('revisa LEE')
@@ -107,7 +109,9 @@ def check_25(code):
         print(f'LEE')
         print('ERROR! in line:\n' +
         f'{code[0]}{code[1]}{code[2]}')
-        code = []
+
+        for x in range(len(code)-1):
+            code.pop(0)
 
 # Revisa los ESCRIBE
 def check_26(code):
@@ -120,43 +124,55 @@ def check_26(code):
         print(f'ESCRIBE')
         print('ERROR! in line:\n' +
         f'{code[0]}{code[1]}{code[2]}')
-        code = []
+        for x in range(len(code)-1):
+            code.pop(0)
         # Vaciar pila si hay error.
 
 # Revisa el INICIO y FIN
 def check_30(code):
-    print('revisa INICIO y FIN')
     if f'{code[0]}{code[1]}' == '[30][13]':
         code.pop(0)
         code.pop(0)
         check_code(code)
+    else:
+        print(f'ERROR: inicio')
+        for x in range(len(code)-1):
+            code.pop(0)
+
+    if len(code) < 2:
+        print(f'ERROR: fin')
+        for x in range(len(code)-1):
+            code.pop(0)
     elif f'{code[0]}{code[1]}' == '[14][31]':
         code.pop(0)
         code.pop(0)
-    else:
-        print(f'INICIO y FIN')
-        print(f'ERROR en {code[0]}{code[1]}')
-        code = []
 
 def check_asignacion(code):
-    print('revisa asignacion')
-
     espera_var = True
 
-    while f'{code[0]}' != "[15]":
+    while f'{code[0]}' != '[15]':
         if espera_var and f'{code[0]}' in variables:
             code.pop(0)
             espera_var = False
         elif not espera_var and f'{code[0]}' in aritmeticos:
             code.pop(0)
             espera_var = True
+        else:
+            break
 
-    code.pop(0)
+    if espera_var:
+        print('ERROR: Asignacion incorrecta')
+        for x in range(len(code)-1):
+            code.pop(0)
+
+    if f'{code[0]}' == '[15]':
+        code.pop(0)
 
 def check_code(code):
-    print(code)
     while True:
-        if code[0] == '[20]':
+        if len(code) <= 1:
+            break
+        elif code[0] == '[20]':
             check_20(code)
         elif code[0] == '[22]':
             check_22(code)
@@ -166,17 +182,20 @@ def check_code(code):
             check_25(code)
         elif code[0] == '[26]':
             check_26(code)
-        elif len(code) == 1 or code[0] == '':
-            print('El codigo se termino de analizar')
-        elif code[0] == '[30]' or code[1] == '[31]':
+        elif code[0] == '[30]':
             check_30(code)
+        elif code[1] == '[31]':
+            break
+        elif code[0] in variables:
+            check_asignacion(code)
+        elif code[0] == '[14]':
+            break
         else:
             print(f'CHECK CODE')
             print(f'ERROR en {code[0]}')
-            code = []
+            for x in range(len(code)-1):
+                code.pop(0)
 
-        if code[0] not in ['[25]', '[26]']:
-            break
     return code
 
 def main():

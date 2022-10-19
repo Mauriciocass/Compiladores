@@ -1,5 +1,6 @@
 inicio
 [
-    lee a
+    b = 5 #
+    i = 9 / 8 #
 ]
 fin
