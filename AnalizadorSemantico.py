@@ -168,11 +168,8 @@ def check_code(code):
             check_26(code)
         elif len(code) == 1 or code[0] == '':
             print('El codigo se termino de analizar')
-            break
         elif code[0] == '[30]' or code[1] == '[31]':
             check_30(code)
-        elif code[0] in variables:
-            check_asignacion(code)
         else:
             print(f'CHECK CODE')
             print(f'ERROR en {code[0]}')
