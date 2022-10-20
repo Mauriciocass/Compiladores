@@ -1,8 +1,9 @@
 inicio
 [
-    si ( x > 0 ) :
+    mientras x > 0 realiza
     [
-        x + #
+        x = 5 + 5 #
+        b = 5 / 3 #
     ]
 ]
 fin
