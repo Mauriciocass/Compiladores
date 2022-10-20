@@ -2,7 +2,7 @@ inicio
 [
     si ( x > 0 ) :
     [
-        lee "hola" #
+        x =  #
     ]
 ]
 fin

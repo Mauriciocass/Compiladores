@@ -142,14 +142,20 @@ def check_30(code):
 
 def check_asignacion(code):
     espera_var = True
+    c = 0
 
     while f'{code[0]}' != '[15]':
+        c += 1
         if espera_var and f'{code[0]}' in variables:
             code.pop(0)
             espera_var = False
         elif not espera_var and f'{code[0]}' in aritmeticos:
             code.pop(0)
             espera_var = True
+        elif c == 2 and code[0] != '[00]':
+            print('ERROR: Asignacion requiere un "="')
+            for x in range(len(code)-1):
+                code.pop(0)
         else:
             break
 
