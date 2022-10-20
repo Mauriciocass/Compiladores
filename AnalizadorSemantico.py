@@ -204,11 +204,7 @@ def main():
     code = open('codigo.xxz', 'r').read().replace('][', ']\n[').split('\n')
     code.pop()
 
-    print(code)
-
     code = check_code(code)
-
-    print(code)
 
     if not error:
         print('Felicidades! El codigo no cuenta con errores.')
