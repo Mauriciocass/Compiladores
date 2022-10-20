@@ -34,7 +34,7 @@ def check_20(code):
     if f'{code[0]}' == '[14]':
         code.pop(0)
     else:
-        print(f'ERROR en {code[0]}')
+        print(f'ERROR: condicion no cerrada')
         for x in range(len(code)-1):
             code.pop(0)
 
@@ -52,7 +52,7 @@ def check_20(code):
             code.pop(0)
             check_code(code)
         else:
-            print(f'ERROR: condicion sino incorrecta')
+            print(f'ERROR: condicion sno cerrada')
             for x in range(len(code)-1):
                 code.pop(0)
 
@@ -65,8 +65,7 @@ def check_22(code):
             code.pop(0)
         check_code(code)
     else:
-        print(f'DESDE y REALIZA')
-        print(f'ERROR en {code[0]}{code[1]}')
+        print(f'ERROR: desde mal creado')
         for x in range(len(code)-1):
             code.pop(0)
         # Vaciar pila si hay error.
@@ -74,8 +73,7 @@ def check_22(code):
     if f'{code[0]}' == '[14]':
         code.pop(0)
     else:
-        print(f'DESDE y REALIZA 2')
-        print(f'ERROR en {code[0]}')
+        print(f'ERROR: realiza correspondiente a desde')
         for x in range(len(code)-1):
             code.pop(0)
 
@@ -100,29 +98,24 @@ def check_24(code):
 
 # Revisa los LEE
 def check_25(code):
-    print('revisa LEE')
     if f'{code[0]}{code[2]}' == '[25][15]' and code[1] in variables:
         code.pop(0)
         code.pop(0)
         code.pop(0)
     else:
-        print(f'LEE')
-        print('ERROR! in line:\n' +
-        f'{code[0]}{code[1]}{code[2]}')
+        print('ERROR: lee mal creado')
 
         for x in range(len(code)-1):
             code.pop(0)
 
 # Revisa los ESCRIBE
 def check_26(code):
-    print('revisa ESCRIBE')
     if f'{code[0]}{code[2]}' == '[26][15]' and code[1] in variables:
         code.pop(0)
         code.pop(0)
         code.pop(0)
     else:
-        print(f'ESCRIBE')
-        print('ERROR! in line:\n' +
+        print('ERROR: escribe mal creado\n' +
         f'{code[0]}{code[1]}{code[2]}')
         for x in range(len(code)-1):
             code.pop(0)
@@ -135,12 +128,12 @@ def check_30(code):
         code.pop(0)
         check_code(code)
     else:
-        print(f'ERROR: inicio')
+        print(f'ERROR: falta inicio')
         for x in range(len(code)-1):
             code.pop(0)
 
     if len(code) < 2:
-        print(f'ERROR: fin')
+        print(f'ERROR: falta fin')
         for x in range(len(code)-1):
             code.pop(0)
     elif f'{code[0]}{code[1]}' == '[14][31]':
@@ -191,8 +184,7 @@ def check_code(code):
         elif code[0] == '[14]':
             break
         else:
-            print(f'CHECK CODE')
-            print(f'ERROR en {code[0]}')
+            print(f'ERROR: simbolo {code[0]} no reconocido')
             for x in range(len(code)-1):
                 code.pop(0)
 

@@ -1,6 +1,8 @@
 inicio
 [
-    b = 5 #
-    i = 9 / 8 #
+    si ( x > 0 ) :
+    [
+        lee "hola" #
+    ]
 ]
 fin
