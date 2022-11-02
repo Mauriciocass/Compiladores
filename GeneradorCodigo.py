@@ -61,7 +61,7 @@ def ifContent(code):
     etiquetas += 1
     print(f'    jmp ETI{etiquetas}')
 '''
-# Asignacion simple
+# Asignacion
 def asignacion(code):
     destiny = code.pop(0)
     tempCode = []
