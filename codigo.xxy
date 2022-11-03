@@ -1,5 +1,13 @@
 inicio
 [
-    a = b + c * 90 #
+    si ( a < b ) :
+    [
+        a = 10 #
+    ]
+    sino :
+    [
+        c = 0 #
+    ]
+    x = 12 #
 ]
 fin
