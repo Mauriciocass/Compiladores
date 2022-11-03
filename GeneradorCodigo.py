@@ -43,6 +43,24 @@ def asignacion(code):
     tempCode = posfija(tempCode)
     print(f'    mov {destiny}, ax')
 
+# Convierte una linea de codigo lee a codigo ensamblador
+def lee(code):
+    code.pop(0)
+    print('    mov ax, 01')
+    print(f'    mov dx, {code.pop(0)}')
+    print(f'    mov cx, 2')
+    print(f'    int 21H')
+    code.pop(0)
+
+# Convierte una linea de codigo escribe a codigo ensamblador
+def escribe(code):
+    code.pop(0)
+    print('    mov ax, 02')
+    print(f'    mov dx, {code.pop(0)}')
+    print(f'    mov cx, 2')
+    print(f'    int 21H')
+    code.pop(0)
+
 # Convierte una expresion infija a una posfija e imprime las instrucciones en ensamblador
 def posfija(expresion):
     operator = ['[01]', '[02]', '[03]', '[04]']
@@ -51,63 +69,67 @@ def posfija(expresion):
     postfix = []
     stack = []
 
-    for x in expresion:
-        if x not in operator and x != '[05]' and x != '[06]':
-            print(f'    move ax, {x}')
-            print(f'    push ax')
-            postfix.append(x)
-        elif x == '[05]':
-            stack.append(x)
-        elif x == '[06]':
-            while stack[-1]!= '[05]':
-                print(f'    pop bx')
-                print(f'    pop ax')
-                if(stack[-1] == '[01]'):
-                    print('    add ax, bx')
-                elif(stack[-1] == '[02]'):
-                    print('    sub ax, bx')
-                elif(stack[-1] == '[03]'):
-                    print('    mul ax, bx')
-                elif(stack[-1] == '[04]'):
-                    print('    div ax, bx')
-                postfix.append(stack.pop())
-                if len(stack) != 0:
-                    print('    push ax')
-            stack.pop()
-        else:
-            while len(stack) != 0 and prec[x] <= prec[stack[-1]]:
-                print(f'    pop bx')
-                print(f'    pop ax')
-                if(stack[-1] == '[01]'):
-                    print('    add ax, bx')
-                elif(stack[-1] == '[02]'):
-                    print('    sub ax, bx')
-                elif(stack[-1] == '[03]'):
-                    print('    mul ax, bx')
-                elif(stack[-1] == '[04]'):
-                    print('    div ax, bx')
-                postfix.append(stack.pop())
-                if len(stack) != 0:
-                    print('    push ax')
-            stack.append(x)
+    if len(expresion) == 1:
+        print(f'    move ax, {expresion.pop()}')
+    else:
+        for x in expresion:
+            if x not in operator and x != '[05]' and x != '[06]':
+                print(f'    move ax, {x}')
+                print(f'    push ax')
+                postfix.append(x)
+            elif x == '[05]':
+                stack.append(x)
+            elif x == '[06]':
+                while stack[-1]!= '[05]':
+                    print(f'    pop bx')
+                    print(f'    pop ax')
+                    if(stack[-1] == '[01]'):
+                        print('    add ax, bx')
+                    elif(stack[-1] == '[02]'):
+                        print('    sub ax, bx')
+                    elif(stack[-1] == '[03]'):
+                        print('    mul ax, bx')
+                    elif(stack[-1] == '[04]'):
+                        print('    div ax, bx')
+                    postfix.append(stack.pop())
+                    if len(stack) != 0:
+                        print('    push ax')
+                stack.pop()
+            else:
+                while len(stack) != 0 and prec[x] <= prec[stack[-1]]:
+                    print(f'    pop bx')
+                    print(f'    pop ax')
+                    if(stack[-1] == '[01]'):
+                        print('    add ax, bx')
+                    elif(stack[-1] == '[02]'):
+                        print('    sub ax, bx')
+                    elif(stack[-1] == '[03]'):
+                        print('    mul ax, bx')
+                    elif(stack[-1] == '[04]'):
+                        print('    div ax, bx')
+                    postfix.append(stack.pop())
+                    if len(stack) != 0:
+                        print('    push ax')
+                stack.append(x)
 
-    while len(stack) != 0:
-        print(f'    pop bx')
-        print(f'    pop ax')
-        if(stack[-1] == '[01]'):
-            print('    add ax, bx')
-        elif(stack[-1] == '[02]'):
-            print('    sub ax, bx')
-        elif(stack[-1] == '[03]'):
-            print('    mul ax, bx')
-        elif(stack[-1] == '[04]'):
-            print('    div ax, bx')
-        postfix.append(stack.pop())
-        if len(stack) != 0:
-            print('    push ax')
+        while len(stack) != 0:
+            print(f'    pop bx')
+            print(f'    pop ax')
+            if(stack[-1] == '[01]'):
+                print('    add ax, bx')
+            elif(stack[-1] == '[02]'):
+                print('    sub ax, bx')
+            elif(stack[-1] == '[03]'):
+                print('    mul ax, bx')
+            elif(stack[-1] == '[04]'):
+                print('    div ax, bx')
+            postfix.append(stack.pop())
+            if len(stack) != 0:
+                print('    push ax')
 
     return postfix
 
+# Convierte el la expresion del si a codigo ensamblador
 def assemblySi(code):
     global contEti
     global printETI
@@ -140,18 +162,21 @@ def assemblySi(code):
     print(f'    jmp ETI{contEti}')
     contEti += 1
 
-    print(f'\nETI{printETI}')
+    print(f'\nETI{printETI}:')
     printETI += 1
     switch(tempCode[8:-1])
 
-    if(code[0] == '[21]'):
-        print(f'    jmp ETI{contEti}')
+    if code[0] == '[21]':
+        print(f'    jmp ETI{contEti}:')
+        contEti += 1
         assemblySino(code)
-        print(f'\nETI{contEti}:')
+        print(f'\nETI{printETI}:')
+        printETI += 1
     else:
         print(f'\nETI{printETI}:')
         printETI += 1
 
+# Convierte el la expresion del sino a codigo ensamblador
 def assemblySino(code):
     global printETI
     tempCode = []
@@ -173,26 +198,31 @@ def assemblySino(code):
     for x in tempCode:
             code.remove(x)
 
-    print(f'\nETI{printETI:}')
+    print(f'\nETI{printETI}:')
     printETI += 1
     switch(tempCode[3:-1])
 
+# Decide que otra funcion debe usarse dependiendo de la funcion que se vaya a convertir a ensamblador
 def switch(code):
     try:
         # Si hay un si se va a la funcion para imprimir el si
-        if(code[0] == '[20]'):
+        if code[0] == '[20]':
             assemblySi(code)
         # Hace el codigo para las asignaciones
         elif code[0] in variables:
             asignacion(code)
+        elif code[0] == '[25]':
+            lee(code)
+        elif code[0] == '[26]':
+            escribe(code)
     except:
         pass
 
 def main():
+
     global contEti
     assemblyVariables()
     code = cargarCodigo()
-
     while len(code) > 0:
         switch(code)
 
