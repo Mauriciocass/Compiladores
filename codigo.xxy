@@ -1,17 +1,5 @@
 inicio
 [
-    si ( x >= 10 ) :
-    [
-        lee "hola" #
-        lee "a" #
-    ]
-    sino :
-    [
-        escribe mensaje #
-    ]
-    mientras ( id <= 10) realiza:
-    [
-        escribe "holaa"#
-    ]
+    escribe a #
 ]
 fin
