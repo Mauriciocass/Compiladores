@@ -1,3 +1,4 @@
+from multiprocessing import parent_process
 import pandas as pd
 
 global error
@@ -53,7 +54,7 @@ def check_20(code):
             code.pop(0)
             check_code(code)
         else:
-            print(f'ERROR: condicion no cerrada')
+            print(f'ERROR: condicion sno cerrada')
             error = True
 
 # Revisa los DESDE y REALIZA
@@ -165,9 +166,6 @@ def check_asignacion(code):
 
     if f'{code[0]}' == '[15]':
         code.pop(0)
-    else:
-        print('ERROR: Falta #')
-        error = True
 
 def check_code(code):
     global error
@@ -194,6 +192,8 @@ def check_code(code):
                     check_asignacion(code)
                 elif code[0] == '[14]':
                     break
+                else:
+                    print(f'ERROR: simbolo {code[0]} no reconocido')
             except:
                 break
 
