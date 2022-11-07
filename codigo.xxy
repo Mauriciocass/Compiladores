@@ -9,7 +9,7 @@ inicio
     [
         escribe mensaje #
     ]
-    mientras ( id <= 10) realiza
+    mientras ( id <= 10) realiza:
     [
         escribe "holaa"#
     ]
