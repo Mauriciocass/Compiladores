@@ -76,8 +76,8 @@ def check_22(code):
 def check_24(code):
     print('revisa MIENTRAS y REALIZA')
     
-    if f'{code[0]}{code[1]}{code[5]}{code[6]}{code[7]}' == '[24][05][06][23][13]' and code[2] in variables and code[3] in operadores and code[4] in variables:
-            for x in list(range(0,8)):
+    if f'{code[0]}{code[1]}{code[5]}{code[6]}{code[7]}{code[8]}' == '[24][05][06][23][16] c' and code[2] in variables and code[3] in operadores and code[4] in variables:
+            for x in list(range(0,9)):
                 code.pop(0)
             check_code(code)
     else:
