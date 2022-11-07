@@ -1,9 +1,5 @@
 inicio
 [
-    mientras x > 0 realiza
-    [
-        x = 5 + 5 #
-        b = 5 / 3 #
-    ]
+    escribe a #
 ]
 fin
