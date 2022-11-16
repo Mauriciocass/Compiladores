@@ -274,6 +274,9 @@ def assemblyDesde(code):
     print(f'\nETI{printETI}:')
     printETI += 1
     switch(tempCode[10:-1])
+    print(f'    mov ax, {tempCode[2]}')
+    print('    add ax, 1')
+    print(f'    mov {tempCode[2]}, ax')
     print(f'\nETI{printETI}:')
     printETI += 1
 
@@ -289,9 +292,10 @@ def switch(code):
         # Hace el codigo para lee
         elif code[0] == '[25]':
             lee(code)
-        # Hace el codigo para
+        # Hace el codigo para escribe
         elif code[0] == '[26]':
             escribe(code)
+        # Hace el codigo para desde
         elif code[0] == '[22]':
             assemblyDesde(code)
     except:

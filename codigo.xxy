@@ -4,9 +4,5 @@ inicio
     [
         a = 0 #
     ]
-
-    escribe "xd" #
-
-    lee b #
 ]
 fin
