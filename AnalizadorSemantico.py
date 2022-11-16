@@ -59,7 +59,6 @@ def check_20(code):
 # Revisa los DESDE y REALIZA
 def check_22(code):
     global error
-    print('revisa DESDE y REALIZA')
 
     if f'{code[0]}{code[2]}{code[4]}{code[6]}{code[8]}{code[9]}' == '[22][00][27][00][23][13]' and code[1] in variables:
         for x in list(range(0,10)):

@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 
 variables = pd.read_csv('referencias.csv').to_numpy()
-
 variables = np.delete(variables, 0, 1)
 
 contEti = 0
@@ -129,7 +128,7 @@ def posfija(expresion):
 
     return postfix
 
-# Convierte el la expresion del si a codigo ensamblador
+# Convierte la expresion del si a codigo ensamblador
 def assemblySi(code):
     global contEti
     global printETI
@@ -176,7 +175,7 @@ def assemblySi(code):
         print(f'\nETI{printETI}:')
         printETI += 1
 
-# Convierte el la expresion del sino a codigo ensamblador
+# Convierte la expresion del sino a codigo ensamblador
 def assemblySino(code):
     global printETI
     tempCode = []
@@ -202,6 +201,82 @@ def assemblySino(code):
     printETI += 1
     switch(tempCode[3:-1])
 
+# Convierte la expresion del mientras a codigo ensamblador
+# Corregir
+def assemblyMientras(code):
+    global contEti
+    global printETI
+
+    tempCode = []
+    brackets = 0
+    # Este codigo revisa el inicio y fin del desde, para mandar solo eso a la funcion que crea el codigo de si.
+    for x in code:
+        if x == '[13]':
+            tempCode.append(x)
+            brackets += 1
+        elif x == '[14]':
+            tempCode.append(x)
+            brackets -= 1
+            if brackets == 0:
+                break
+        else:
+            tempCode.append(x)
+    # Quita todo el codigo que fue impreso en el si anteriormente
+    for x in tempCode:
+            code.remove(x)
+
+    print(f'    mov ax, {tempCode[2]}')
+    print(f'    mov bx, {tempCode[4]}')
+    print(f'    cmp ax, bx')
+
+    print(f'    jle ETI{contEti}')
+    contEti += 1
+    print(f'    jmp ETI{contEti}')
+    contEti += 1
+
+    print(f'\nETI{printETI}:')
+    printETI += 1
+    switch(tempCode[10:-1])
+    print(f'\nETI{printETI}:')
+    printETI += 1
+
+def assemblyDesde(code):
+    global contEti
+    global printETI
+
+    tempCode = []
+    brackets = 0
+    # Este codigo revisa el inicio y fin del desde, para mandar solo eso a la funcion que crea el codigo de si.
+    for x in code:
+        if x == '[13]':
+            tempCode.append(x)
+            brackets += 1
+        elif x == '[14]':
+            tempCode.append(x)
+            brackets -= 1
+            if brackets == 0:
+                break
+        else:
+            tempCode.append(x)
+    # Quita todo el codigo que fue impreso en el si anteriormente
+    for x in tempCode:
+            code.remove(x)
+
+    print(f'    mov ax, {tempCode[2]}')
+    print(f'    mov bx, {tempCode[4]}')
+    print(f'    cmp ax, bx')
+
+    print(f'    jle ETI{contEti}')
+    contEti += 1
+    print(f'    jmp ETI{contEti}')
+    contEti += 1
+
+    print(f'\nETI{printETI}:')
+    printETI += 1
+    switch(tempCode[10:-1])
+    print(f'\nETI{printETI}:')
+    printETI += 1
+
 # Decide que otra funcion debe usarse dependiendo de la funcion que se vaya a convertir a ensamblador
 def switch(code):
     try:
@@ -211,10 +286,14 @@ def switch(code):
         # Hace el codigo para las asignaciones
         elif code[0] in variables:
             asignacion(code)
+        # Hace el codigo para lee
         elif code[0] == '[25]':
             lee(code)
+        # Hace el codigo para
         elif code[0] == '[26]':
             escribe(code)
+        elif code[0] == '[22]':
+            assemblyDesde(code)
     except:
         pass
 

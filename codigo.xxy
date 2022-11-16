@@ -1,5 +1,12 @@
 inicio
 [
-    escribe a #
+    desde x = 5 hasta x = 10 realiza
+    [
+        a = 0 #
+    ]
+
+    escribe "xd" #
+
+    lee b #
 ]
 fin
