@@ -206,6 +206,7 @@ def assemblySino(code):
 def assemblyMientras(code):
     global contEti
     global printETI
+    jumps = {'[07]':'je', '[08]':'jne', '[09]':'jg', '[10]':'jge', '[11]':'jl', '[12]':'jle',}
 
     tempCode = []
     brackets = 0
@@ -229,7 +230,7 @@ def assemblyMientras(code):
     print(f'    mov bx, {tempCode[4]}')
     print(f'    cmp ax, bx')
 
-    print(f'    jle ETI{contEti}')
+    print(f'    {jumps[tempCode[2]]} ETI{contEti}')
     contEti += 1
     print(f'    jmp ETI{contEti}')
     contEti += 1
@@ -237,9 +238,13 @@ def assemblyMientras(code):
     print(f'\nETI{printETI}:')
     printETI += 1
     switch(tempCode[10:-1])
+    print(f'    mov ax, {tempCode[2]}')
+    print('    add ax, 1')
+    print(f'    mov {tempCode[2]}, ax')
     print(f'\nETI{printETI}:')
     printETI += 1
 
+# Convierte la expresion de desde a codigo ensamblador
 def assemblyDesde(code):
     global contEti
     global printETI
@@ -298,6 +303,9 @@ def switch(code):
         # Hace el codigo para desde
         elif code[0] == '[22]':
             assemblyDesde(code)
+        # Hace el codigo para mientra
+        elif code[0] == '[24]':
+            assemblyMientras(code)
     except:
         pass
 

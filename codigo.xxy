@@ -1,6 +1,6 @@
 inicio
 [
-    desde x = 5 hasta x = 10 realiza
+    mientras a > 10 realiza
     [
         a = 0 #
     ]
