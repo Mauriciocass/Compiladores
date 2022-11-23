@@ -5,7 +5,7 @@ from GeneradorCodigo import main as cod
 def main():
     lex()
     sem()
-    # cod()
+    cod()
 
 if __name__=="__main__":
     main()
