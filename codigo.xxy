@@ -1,8 +1,5 @@
 inicio
 [
-    mientras a > 10 realiza
-    [
-        a = 0 #
-    ]
+    z = ( a - 6 * ( x + y ) ) #
 ]
 fin
