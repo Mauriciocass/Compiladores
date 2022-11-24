@@ -7,7 +7,7 @@ Autores:
 - Mauricio Nuñez
 - Ilian Chavez
 - German Morales
-- Armando Perez 
+- Armando Perez
 
 Contenido:
 - <b>AnalizadorLexico.py</b> :<br>
@@ -23,4 +23,4 @@ Contenido:
 - <b>referencias.csv</b> :<br>
     Es el archivo con las variables y constantes que fueron referenciadas en el codigo del archivo 'codigo.xxy'.
 - <b>run.py</b> :<br>
-    Para facilitar correr los dos analizadores se creo 'run.py', que corre los archivos 'AnalizadorLexico.py' y 'AnalizadorSemantico.py' en secuencia, pues es necesarios que se corra el analizador lexico si se le hizo un cambio al archivo 'codigo.xxy'.
+    Para facilitar correr los dos analizadores se creo 'run.py', que corre los archivos 'AnalizadorLexico.py', 'AnalizadorSemantico.py' y 'GeneradorCodigo.oy' en secuencia, pues es necesarios que se corra el analizador lexico si se le hizo un cambio al archivo 'codigo.xxy'.
