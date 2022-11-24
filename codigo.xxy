@@ -1,5 +1,10 @@
 inicio
 [
-    z = ( a - 6 * ( x + y ) ) #
+    x = a * ( c - 5 ) / z #
+
+    desde i = 1 hasta i = 20 realiza
+    [
+        escribe i #
+    ]
 ]
 fin

@@ -1,0 +1,56 @@
+ejercicio 1
+inicio
+[
+    x = 6 #
+    y = 7 #
+    a = x * x / y #
+    desde i = 1 hasta i = 10 realiza
+    [
+        x = y * 2 #
+        a = a * x * y #
+    ]
+]
+fin
+
+ejercicio 2
+inicio
+[
+    x = 6 #
+    y = 7 #
+    a = x * x / y #
+    si ( x <= y ) :
+    [
+        z = a / 2 #
+    ]
+    sino :
+    [
+        z = a * 2 #
+    ]
+        escribe z #
+]
+fin
+
+ejercicio 3
+inicio
+[
+    i = 3 #
+    j = i + j #
+    mientras i > 0 realiza
+    [
+        x = a * ( c - 5 ) / z #
+        i = i + 1 #
+    ]
+]
+fin
+
+ejercicio 4
+inicio
+[
+    x = a * ( c - 5 ) / z #
+
+    para i = 1 hasta i = 20 realiza
+    [
+        escribe i #
+    ]
+]
+fin

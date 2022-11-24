@@ -77,7 +77,7 @@ def check_22(code):
     else:
         print(f'ERROR: desde mal creado')
         error = True
-        # Vaciar pila si hay error.
+        code = []
 
     if f'{code[0]}' == '[14]':
         code.pop(0)
@@ -168,9 +168,11 @@ def check_asignacion(code):
             elif code[0] == '[05]':
                 brackets += 1
                 code.pop(0)
+                espera_var = True
             elif code[0] == '[06]':
                 brackets -= 1
                 code.pop(0)
+                espera_var = False
             else:
                 break
     else:

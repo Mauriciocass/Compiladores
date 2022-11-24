@@ -445,7 +445,7 @@ def main():
     result += '\n    int 20H'
     print('\n    int 20H')
 
-    print(result)
+    #print(result)
 
 if __name__=="__main__":
     main()
