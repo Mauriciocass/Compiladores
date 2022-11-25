@@ -49,6 +49,8 @@ def asignacion(code):
     result += f'    mov {destiny}, ax\n'
     print(f'    mov {destiny}, ax')
 
+    switch(code)
+
 # Convierte una linea de codigo lee a codigo ensamblador
 def lee(code):
     global result
@@ -95,13 +97,13 @@ def posfija(expresion):
     stack = []
 
     if len(expresion) == 1:
-        result += f'    move ax, {expresion[-1]}\n'
-        print(f'    move ax, {expresion.pop()}')
+        result += f'    mov ax, {expresion[-1]}\n'
+        print(f'    mov ax, {expresion.pop()}')
     else:
         for x in expresion:
             if x not in operator and x != '[05]' and x != '[06]':
-                result += f'    move ax, {x}\n'
-                print(f'    move ax, {x}')
+                result += f'    mov ax, {x}\n'
+                print(f'    mov ax, {x}')
 
                 result += f'    push ax\n'
                 print(f'    push ax')
@@ -132,6 +134,8 @@ def posfija(expresion):
                     elif(stack[-1] == '[04]'):
                         result += '    div ax, bx\n'
                         print('    div ax, bx')
+
+                    print('    push ax')
 
                     postfix.append(stack.pop())
                     if len(stack) != 0:
@@ -168,6 +172,8 @@ def posfija(expresion):
                     if len(stack) != 0:
                         result += '    push ax\n'
                         print('    push ax')
+
+                    print('    push ax')
 
                 stack.append(x)
 
@@ -316,11 +322,11 @@ def assemblyMientras(code):
     for x in tempCode:
             code.remove(x)
 
-    result += f'    mov ax, {tempCode[2]}\n'
-    print(f'    mov ax, {tempCode[2]}')
+    result += f'    mov ax, {tempCode[1]}\n'
+    print(f'    mov ax, {tempCode[1]}')
 
-    result += f'    mov ax, {tempCode[4]}\n'
-    print(f'    mov bx, {tempCode[4]}')
+    result += f'    mov ax, {tempCode[3]}\n'
+    print(f'    mov bx, {tempCode[3]}')
 
     result += f'    cmp ax, bx\n'
     print(f'    cmp ax, bx')
@@ -336,16 +342,24 @@ def assemblyMientras(code):
     result += f'\nETI{printETI}:\n'
     print(f'\nETI{printETI}:')
     printETI += 1
-    switch(tempCode[10:-1])
+    switch(tempCode[6:-1])
 
-    result += f'    mov ax, {tempCode[2]}\n'
-    print(f'    mov ax, {tempCode[2]}')
+    result += f'    mov ax, {tempCode[1]}\n'
+    print(f'    mov ax, {tempCode[1]}')
 
-    result += '    add ax, 1\n'
-    print('    add ax, 1')
+    result += f'    mov ax, {tempCode[3]}\n'
+    print(f'    mov bx, {tempCode[3]}')
 
-    result += f'    mov {tempCode[2]}, ax\n'
-    print(f'    mov {tempCode[2]}, ax')
+    result += f'    cmp ax, bx\n'
+    print(f'    cmp ax, bx')
+
+    result += f'    {jumps[tempCode[2]]} ETI{contEti-2}\n'
+    print(f'    {jumps[tempCode[2]]} ETI{contEti-2}')
+    contEti += 1
+
+    result += f'    jmp ETI{contEti-2}\n'
+    print(f'    jmp ETI{contEti-2}')
+    contEti += 1
 
     result += f'\nETI{printETI}:\n'
     print(f'\nETI{printETI}:')
@@ -375,11 +389,22 @@ def assemblyDesde(code):
     for x in tempCode:
             code.remove(x)
 
-    result += f'    mov ax, {tempCode[2]}\n'
-    print(f'    mov ax, {tempCode[2]}')
+    result += f'\nETI{printETI}:\n'
+    print(f'\nETI{printETI}:')
+    printETI += 1
+    switch(tempCode[10:-1])
 
-    result += f'    mov bx, {tempCode[4]}\n'
-    print(f'    mov bx, {tempCode[4]}')
+    result += f'    mov ax, {tempCode[1]}\n'
+    print(f'    mov ax, {tempCode[1]}')
+
+    result += '    add ax, 1\n'
+    print('    add ax, 1')
+
+    result += f'    mov {tempCode[1]}, ax\n'
+    print(f'    mov {tempCode[1]}, ax')
+
+    result += f'    mov bx, {tempCode[7]}\n'
+    print(f'    mov bx, {tempCode[7]}')
 
     result += f'    cmp ax, bx\n'
     print(f'    cmp ax, bx')
@@ -387,24 +412,7 @@ def assemblyDesde(code):
     result += f'    jle ETI{contEti}\n'
     print(f'    jle ETI{contEti}')
     contEti += 1
-
-    result += f'    jmp ETI{contEti}\n'
-    print(f'    jmp ETI{contEti}')
     contEti += 1
-
-    result += f'\nETI{printETI}:\n'
-    print(f'\nETI{printETI}:')
-    printETI += 1
-    switch(tempCode[10:-1])
-
-    result += f'    mov ax, {tempCode[2]}\n'
-    print(f'    mov ax, {tempCode[2]}')
-
-    result += '    add ax, 1\n'
-    print('    add ax, 1')
-
-    result += f'    mov {tempCode[2]}, ax\n'
-    print(f'    mov {tempCode[2]}, ax')
 
     result += f'\nETI{printETI}:\n'
     print(f'\nETI{printETI}:')
